@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #08080A;
+  color: #F4F1E8;
+}
+
+/* Linea di rotta animata - il tracciato che collega due punte de aeroporto */
+@keyframes draw-route {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.route-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-route 2.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.25s; }
+.fade-up-3 { animation-delay: 0.4s; }
+.fade-up-4 { animation-delay: 0.55s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-line, .fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* Focus visibile per accessibilita' da tastiera */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #C9A227;
+  outline-offset: 3px;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #8A7220 0%, #C9A227 45%, #E8CE7A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
