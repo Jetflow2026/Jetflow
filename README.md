@@ -1,38 +1,48 @@
-# Jetflow — starter tema nero/oro
+# Jetflow — sito completo (ricreato dal design Figma)
 
-Starter Next.js 14 (App Router) + Tailwind con l'estetica nero/oro per Jetflow.
+Sito Next.js 14 completo con tutte le sezioni viste nel video del design
+generato su Figma Make: hero con motore di ricerca, flotta filtrabile,
+come funziona, rotte popolari, testimonianze, membership e footer.
 
-## Palette
-- `jet-950` #08080A — sfondo principale
-- `jet-900` #101012 — pannelli/sezioni
-- `jet-800` #1B1B1E — bordi
-- `gold` #C9A227 — colore primario di accento
-- `gold-light` #E8CE7A — hover / evidenze
-- `gold-dim` #8A7220 — testo dorato secondario
-- `ivory` #F4F1E8 — testo principale
-
-## Font
-- Display (titoli): Cormorant Garamond
-- Corpo: Inter
-- Dati/numeri (stile strumentazione di volo): IBM Plex Mono
-
-## Come avviarlo in locale
+## Avvio in locale
 ```
 npm install
 npm run dev
 ```
-Poi apri http://localhost:3000
+Apri http://localhost:3000
 
-## Come unirlo al tuo progetto Jetflow esistente
-Se hai gia' un progetto con Supabase/Stripe configurati:
-1. Copia `tailwind.config.ts` (o incolla i colori nella sezione `theme.extend.colors`
-   del tuo file esistente).
-2. Copia il contenuto di `app/globals.css` in fondo al tuo `globals.css`.
-3. Copia i font in `app/layout.tsx` nel tuo layout esistente.
-4. Riusa i blocchi di `app/page.tsx` (hero, stats, come funziona, tratte vuote)
-   dentro le tue pagine, mantenendo la logica Supabase/Stripe che hai gia'.
+## Come sostituire il sito attuale su GitHub/Vercel
 
-## Elemento distintivo
-Il tracciato di volo animato nell'hero (SVG con `stroke-dashoffset`) e' pensato
-come firma visiva del brand: si ridisegna ogni volta che la pagina si apre,
-evocando una rotta che si traccia in tempo reale.
+Il modo piu' pulito e veloce:
+
+1. Sul tuo PC, apri la cartella del progetto attuale (quella collegata a
+   GitHub, con dentro `.git`).
+2. **Cancella tutto il contenuto** tranne la cartella nascosta `.git`
+   (quella mantiene la connessione col repository e con Vercel).
+3. Copia dentro tutti i file e le cartelle di questo pacchetto
+   (`app/`, `package.json`, `tailwind.config.ts`, ecc.).
+4. Da terminale, nella stessa cartella:
+   ```
+   git add .
+   git commit -m "nuovo design sito Jetflow"
+   git push
+   ```
+5. Vercel rifa' automaticamente il deploy in 1-2 minuti — nessuna
+   configurazione aggiuntiva necessaria, dominio e variabili d'ambiente
+   restano quelli gia' impostati.
+
+## Cosa e' cambiato rispetto alla versione precedente
+- Homepage completa con motore di ricerca funzionante (tab andata/ritorno,
+  selettore passeggeri)
+- Sezione flotta con filtri per categoria (Light Jet, Midsize, Long Range,
+  Ultra Long Range, VIP Airliner)
+- Sezione "Come funziona" con 3 step
+- Rotte popolari con card fotografiche
+- Testimonianze con carosello e statistiche
+- Sezione membership "Jetflow Black Card"
+- Footer esteso con newsletter e link
+
+## Personalizzare i contenuti
+Tutti i dati (aeromobili, rotte, testimonianze, statistiche) sono in un
+unico file: `app/data.ts` — modifica quello per aggiornare prezzi, nomi o
+numeri senza toccare il resto del codice.

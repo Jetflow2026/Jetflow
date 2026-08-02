@@ -11,57 +11,26 @@ body {
   color: #F4F1E8;
 }
 
-/* Linea di rotta animata - il tracciato che collega due punte de aeroporto */
-@keyframes draw-route {
-  from {
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.route-line {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: draw-route 2.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  animation-delay: 0.3s;
-}
-
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.fade-up {
-  animation: fade-up 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-.fade-up-1 { animation-delay: 0.1s; }
-.fade-up-2 { animation-delay: 0.25s; }
-.fade-up-3 { animation-delay: 0.4s; }
-.fade-up-4 { animation-delay: 0.55s; }
+.fade-up { animation: fade-up 0.7s ease-out forwards; opacity: 0; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.15s; }
+.fade-up-3 { animation-delay: 0.25s; }
+.fade-up-4 { animation-delay: 0.35s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .route-line, .fade-up {
-    animation: none !important;
-    opacity: 1 !important;
-    stroke-dashoffset: 0 !important;
-  }
+  .fade-up { animation: none !important; opacity: 1 !important; }
 }
 
-/* Focus visibile per accessibilita' da tastiera */
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
   outline: 2px solid #C9A227;
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .text-gradient-gold {
@@ -69,4 +38,18 @@ button:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Scrollbar sottile per aree scrollabili orizzontali (es. carosello) */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #8A7220;
+  border-radius: 4px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7) sepia(1) saturate(3) hue-rotate(5deg);
+  cursor: pointer;
 }

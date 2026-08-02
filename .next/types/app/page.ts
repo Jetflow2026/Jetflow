@@ -1,4 +1,4 @@
-// File: C:\Users\keidd\Desktop\jetflow-tema-nero-oro\jetflow-starter\app\page.tsx
+// File: C:\Users\keidd\Desktop\jetflow 2.0\jetflow-site\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

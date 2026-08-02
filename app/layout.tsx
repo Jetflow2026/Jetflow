@@ -21,9 +21,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jetflow — Noleggio jet privati",
+  title: "Jetflow — Voli privati su misura",
   description:
-    "Confronta e prenota jet privati tra piu' compagnie: tratte su misura e tratte vuote a prezzo agevolato.",
+    "Confronta e prenota jet privati tra piu' compagnie certificate: ricerca, scegli l'aeromobile e parti in poche ore.",
 };
 
 export default function RootLayout({
