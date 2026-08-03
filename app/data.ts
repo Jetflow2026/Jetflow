@@ -1,3 +1,19 @@
+export interface Airport {
+  code: string;
+  label: string;
+}
+
+export const airports: Airport[] = [
+  { code: "LIN", label: "Milano Linate (LIN)" },
+  { code: "CIA", label: "Roma Ciampino (CIA)" },
+  { code: "GVA", label: "Ginevra (GVA)" },
+  { code: "LTN", label: "Londra Luton (LTN)" },
+  { code: "ORY", label: "Parigi Orly (ORY)" },
+  { code: "NCE", label: "Nizza (NCE)" },
+  { code: "JFK", label: "New York (JFK)" },
+  { code: "DXB", label: "Dubai (DXB)" },
+];
+
 export type AircraftCategory =
   | "Light Jet"
   | "Midsize"

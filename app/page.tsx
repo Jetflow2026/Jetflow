@@ -6,18 +6,21 @@ import PopularRoutes from "./components/PopularRoutes";
 import Testimonials from "./components/Testimonials";
 import Membership from "./components/Membership";
 import Footer from "./components/Footer";
+import { SearchProvider } from "./components/SearchContext";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-jet-950">
-      <Nav />
-      <Hero />
-      <Fleet />
-      <HowItWorks />
-      <PopularRoutes />
-      <Testimonials />
-      <Membership />
-      <Footer />
-    </main>
+    <SearchProvider>
+      <main className="min-h-screen bg-jet-950">
+        <Nav />
+        <Hero />
+        <Fleet />
+        <HowItWorks />
+        <PopularRoutes />
+        <Testimonials />
+        <Membership />
+        <Footer />
+      </main>
+    </SearchProvider>
   );
 }

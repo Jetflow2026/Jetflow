@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { stats } from "../data";
-
-type TripType = "solo-andata" | "andata-ritorno" | "multi-tratta";
+import { stats, airports } from "../data";
+import { useSearch, TripType } from "./SearchContext";
 
 export default function SearchWidget() {
-  const [tripType, setTripType] = useState<TripType>("solo-andata");
-  const [passengers, setPassengers] = useState(2);
+  const {
+    from,
+    to,
+    date,
+    passengers,
+    tripType,
+    error,
+    setFrom,
+    setTo,
+    setDate,
+    setPassengers,
+    setTripType,
+    runSearch,
+  } = useSearch();
 
   const tabs: { id: TripType; label: string }[] = [
     { id: "solo-andata", label: "Solo andata" },
@@ -38,48 +48,70 @@ export default function SearchWidget() {
 
       <div className="grid gap-4 md:grid-cols-[1.2fr_1.2fr_1fr_1fr_auto]">
         <div>
-          <label className="mb-1.5 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-gold-dim">
+          <label htmlFor="from" className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
             Partenza
           </label>
-          <select className="w-full appearance-none border-b border-jet-700 bg-transparent py-2 font-body text-sm text-ivory outline-none focus:border-gold">
-            <option className="bg-jet-900">Seleziona aeroporto</option>
-            <option className="bg-jet-900">Milano Linate (LIN)</option>
-            <option className="bg-jet-900">Roma Ciampino (CIA)</option>
-            <option className="bg-jet-900">Ginevra (GVA)</option>
+          <select
+            id="from"
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            className={`w-full appearance-none border-b bg-transparent py-2 font-body text-sm text-ivory outline-none focus:border-gold ${
+              error && !from ? "border-red-500/70" : "border-jet-700"
+            }`}
+          >
+            <option value="" className="bg-jet-900">Seleziona aeroporto</option>
+            {airports.map((a) => (
+              <option key={a.code} value={a.code} className="bg-jet-900">
+                {a.label}
+              </option>
+            ))}
           </select>
         </div>
 
         <div>
-          <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
+          <label htmlFor="to" className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
             Destinazione
           </label>
-          <select className="w-full appearance-none border-b border-jet-700 bg-transparent py-2 font-body text-sm text-ivory outline-none focus:border-gold">
-            <option className="bg-jet-900">Seleziona aeroporto</option>
-            <option className="bg-jet-900">Londra Luton (LTN)</option>
-            <option className="bg-jet-900">Parigi Orly (ORY)</option>
-            <option className="bg-jet-900">Nizza (NCE)</option>
+          <select
+            id="to"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            className={`w-full appearance-none border-b bg-transparent py-2 font-body text-sm text-ivory outline-none focus:border-gold ${
+              error && !to ? "border-red-500/70" : "border-jet-700"
+            }`}
+          >
+            <option value="" className="bg-jet-900">Seleziona aeroporto</option>
+            {airports.map((a) => (
+              <option key={a.code} value={a.code} className="bg-jet-900">
+                {a.label}
+              </option>
+            ))}
           </select>
         </div>
 
         <div>
-          <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
+          <label htmlFor="date" className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
             Data partenza
           </label>
           <input
+            id="date"
             type="date"
+            value={date}
+            min={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setDate(e.target.value)}
             className="w-full border-b border-jet-700 bg-transparent py-2 font-body text-sm text-ivory outline-none focus:border-gold [color-scheme:dark]"
           />
         </div>
 
         <div>
-          <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
+          <p className="mb-1.5 block font-mono text-[11px] uppercase tracking-widest text-gold-dim">
             Passeggeri
-          </label>
+          </p>
           <div className="flex items-center justify-between border-b border-jet-700 py-2">
             <button
               type="button"
               aria-label="Riduci passeggeri"
-              onClick={() => setPassengers((p) => Math.max(1, p - 1))}
+              onClick={() => setPassengers(Math.max(1, passengers - 1))}
               className="flex h-6 w-6 items-center justify-center rounded-sm border border-jet-700 text-ivory transition-colors hover:border-gold hover:text-gold"
             >
               −
@@ -88,7 +120,7 @@ export default function SearchWidget() {
             <button
               type="button"
               aria-label="Aumenta passeggeri"
-              onClick={() => setPassengers((p) => Math.min(19, p + 1))}
+              onClick={() => setPassengers(Math.min(39, passengers + 1))}
               className="flex h-6 w-6 items-center justify-center rounded-sm border border-jet-700 text-ivory transition-colors hover:border-gold hover:text-gold"
             >
               +
@@ -99,6 +131,7 @@ export default function SearchWidget() {
         <div className="flex items-end">
           <button
             type="button"
+            onClick={runSearch}
             className="flex w-full items-center justify-center gap-2 rounded-sm bg-gold-gradient px-6 py-2.5 font-body text-sm font-medium uppercase tracking-wider text-jet-950 transition-opacity hover:opacity-90 md:w-auto"
           >
             Cerca
@@ -106,6 +139,12 @@ export default function SearchWidget() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <p className="mt-3 font-body text-xs text-red-400" role="alert">
+          {error}
+        </p>
+      )}
 
       {/* Statistiche */}
       <div className="mt-8 grid grid-cols-2 gap-6 border-t border-jet-800 pt-6 md:grid-cols-4">
